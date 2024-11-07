@@ -115,3 +115,20 @@ public class CellularAutomatonTilemap : MonoBehaviour {
         }
     }
 }
+
+/*
+ numero = 5
+ for(int i = numero ; numero <= 0 ; numero --){
+    numero % 2 ; 
+    if(numeor = 1){
+        impar 
+        numrto add listainp 
+    }else{
+       impar 
+        numrto add listainpares  
+    }
+} 
+
+imprmier listas pares 
+
+ * */

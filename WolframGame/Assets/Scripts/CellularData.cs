@@ -83,7 +83,43 @@ public class CellularData : MonoBehaviour{
                 }
             }
         }
-
+        PlaceSpecialTiles(mapData, w, h);
         return mapData;
+    }
+
+    void PlaceSpecialTiles(int[,] mapData, int w, int h) {
+        List<Vector2Int> allPositions = GetAllPositions(w, h);
+
+        if (allPositions.Count >= 4) {
+            PlaceTileRandomly(mapData, allPositions, 6); // Base roja
+            PlaceTileRandomly(mapData, allPositions, 7); // Inicio jugador rojo
+            PlaceTileRandomly(mapData, allPositions, 8); // Base azul
+            PlaceTileRandomly(mapData, allPositions, 9); // Inicio jugador azul
+        }
+        else {
+            Debug.LogWarning("No hay suficientes posiciones para colocar los tiles especiales.");
+        }
+    }
+
+    void PlaceTileRandomly(int[,] mapData, List<Vector2Int> allPositions, int tileValue) {
+        // Selecciona una posición al azar y coloca el tile especial
+        int randomIndex = Random.Range(0, allPositions.Count);
+        Vector2Int position = allPositions[randomIndex];
+
+        // Establece el valor del tile especial en la posición seleccionada
+        mapData[position.x, position.y] = tileValue;
+
+        // Elimina la posición de la lista para evitar duplicados
+        allPositions.RemoveAt(randomIndex);
+    }
+
+    List<Vector2Int> GetAllPositions(int w, int h) {
+        List<Vector2Int> allPositions = new List<Vector2Int>();
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                allPositions.Add(new Vector2Int(i, j));
+            }
+        }
+        return allPositions;
     }
 }

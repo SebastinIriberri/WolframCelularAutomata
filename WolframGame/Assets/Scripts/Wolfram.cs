@@ -95,6 +95,10 @@ public class CellularAutomatonTilemap : MonoBehaviour {
             bool right = x == sizeX - 1 ? grid[y - 1, 0] : grid[y - 1, x + 1];
 
             int index = (left ? 4 : 0) + (center ? 2 : 0) + (right ? 1 : 0);
+
+
+  
+
             grid[y, x] = ruleSet[index];
         }
 

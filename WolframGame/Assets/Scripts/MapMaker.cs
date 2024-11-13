@@ -10,6 +10,10 @@ public class MapMaker : MonoBehaviour{
     public Tile piedra;
     public Tile lava;
     public Tile nieve;
+    public Tile baseRoja;
+    public Tile inicioJugadorRojo;
+    public Tile baseAzul;
+    public Tile inicioJugadorAzul;
     public Tilemap tilemap;
 
     public int mapWidth;
@@ -43,6 +47,18 @@ public class MapMaker : MonoBehaviour{
                 }
                 else if (tileType == 5) {
                     tilemap.SetTile(position, nieve);
+                }
+                else if (tileType == 6) {
+                    tilemap.SetTile(position, baseRoja);
+                }
+                else if (tileType == 7) {
+                    tilemap.SetTile(position, inicioJugadorRojo);
+                }
+                else if (tileType == 8) {
+                    tilemap.SetTile(position, baseAzul);
+                }
+                else if (tileType == 9) {
+                    tilemap.SetTile(position, inicioJugadorAzul);
                 }
             }
         }

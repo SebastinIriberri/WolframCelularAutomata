@@ -500,7 +500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &234273430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -963,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &531110384
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillPercent: 0.1
-  iterations: 5
+  iterations: 1
 --- !u!4 &567265842
 Transform:
   m_ObjectHideFlags: 0
@@ -1260,7 +1260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &648221037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1873,7 +1873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1136544405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2121,7 +2121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1168841452
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2634,7 +2634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1352646746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2900,9 +2900,13 @@ MonoBehaviour:
   piedra: {fileID: 11400000, guid: 2ac4db7a5b018254ca76f4ca0ae9610f, type: 2}
   lava: {fileID: 11400000, guid: 1a62b948dd66b8f4fbb71717d598e6e5, type: 2}
   nieve: {fileID: 11400000, guid: be62b898254866c4ab80761d09159d04, type: 2}
+  baseRoja: {fileID: 11400000, guid: 05025632982afc54d85311d414edac13, type: 2}
+  inicioJugadorRojo: {fileID: 11400000, guid: 81c441faa68d29e41979a571f02b0755, type: 2}
+  baseAzul: {fileID: 11400000, guid: 5fa81ebd51d3c424d959bfbe7abf266d, type: 2}
+  inicioJugadorAzul: {fileID: 11400000, guid: c56b36d9c97e61c43b2efb0a0032dc5b, type: 2}
   tilemap: {fileID: 1522314453}
-  mapWidth: 100
-  mapHeight: 100
+  mapWidth: 10
+  mapHeight: 10
   cell: {fileID: 567265841}
 --- !u!4 &1379403394
 Transform:

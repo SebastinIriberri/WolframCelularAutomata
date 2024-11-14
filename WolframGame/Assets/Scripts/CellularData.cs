@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CellularData : MonoBehaviour{
@@ -91,25 +93,20 @@ public class CellularData : MonoBehaviour{
         List<Vector2Int> allPositions = GetAllPositions(w, h);
 
         if (allPositions.Count >= 4) {
-            PlaceTileRandomly(mapData, allPositions, 6); // Base roja
-            PlaceTileRandomly(mapData, allPositions, 7); // Inicio jugador rojo
-            PlaceTileRandomly(mapData, allPositions, 8); // Base azul
-            PlaceTileRandomly(mapData, allPositions, 9); // Inicio jugador azul
+            PlaceTileRandomly(mapData, allPositions, 6); 
+            PlaceTileRandomly(mapData, allPositions, 7); 
+            PlaceTileRandomly(mapData, allPositions, 8); 
+            PlaceTileRandomly(mapData, allPositions, 9); 
         }
         else {
-            Debug.LogWarning("No hay suficientes posiciones para colocar los tiles especiales.");
+            Debug.Log("No hay suficientes posiciones para colocar los tiles especiales.");
         }
     }
 
     void PlaceTileRandomly(int[,] mapData, List<Vector2Int> allPositions, int tileValue) {
-        // Selecciona una posición al azar y coloca el tile especial
         int randomIndex = Random.Range(0, allPositions.Count);
         Vector2Int position = allPositions[randomIndex];
-
-        // Establece el valor del tile especial en la posición seleccionada
         mapData[position.x, position.y] = tileValue;
-
-        // Elimina la posición de la lista para evitar duplicados
         allPositions.RemoveAt(randomIndex);
     }
 
@@ -121,5 +118,93 @@ public class CellularData : MonoBehaviour{
             }
         }
         return allPositions;
+    }
+    //Se obtiene un peso 
+    public int ObtenerPesoTile(int tipoTile) {
+        switch (tipoTile) {
+            case 1: return 1;
+            case 2: return 2; 
+            case 3: return 3; 
+            case 4: return 4; 
+            case 5: return 1; 
+            case 6: return 1; 
+            case 7: return 1; 
+            case 8: return 1; 
+            case 9: return 1; 
+            default: return int.MaxValue; 
+        }
+    }
+
+    // Método A* para calcular el camino
+    public List<Vector2Int> CalcularCaminoAStar(int[,] mapa, Vector2Int inicio, Vector2Int objetivo) {
+        List<Nodo> abiertos = new List<Nodo>();
+        HashSet<Vector2Int> cerrados = new HashSet<Vector2Int>();
+        Nodo nodoInicial = new Nodo(inicio, null, 0, CalcularHeuristica(inicio, objetivo));
+        abiertos.Add(nodoInicial);
+
+        while (abiertos.Count > 0) {
+            Nodo actual = ObtenerNodoConMenorF(abiertos);
+            if (actual.posicion == objetivo) {
+                return ReconstruirCamino(actual);
+            }
+
+            abiertos.Remove(actual);
+            cerrados.Add(actual.posicion);
+
+            foreach (Vector2Int vecino in ObtenerVecinos(actual.posicion, mapa)) {
+                if (cerrados.Contains(vecino)) continue;
+
+                int pesoTile = ObtenerPesoTile(mapa[vecino.x, vecino.y]);
+                if (pesoTile == int.MaxValue) continue;
+
+                int gNuevo = actual.g + pesoTile;
+
+                Nodo vecinoNodo = abiertos.Find(n => n.posicion == vecino);
+                if (vecinoNodo == null) {
+                    int h = CalcularHeuristica(vecino, objetivo);
+                    abiertos.Add(new Nodo(vecino, actual, gNuevo, h));
+                }
+                else if (gNuevo < vecinoNodo.g) {
+                    vecinoNodo.g = gNuevo;
+                    vecinoNodo.padre = actual;
+                }
+            }
+        }
+        return null; 
+    }
+
+    int CalcularHeuristica(Vector2Int pos, Vector2Int objetivo) {
+        return Mathf.Abs(pos.x - objetivo.x) + Mathf.Abs(pos.y - objetivo.y);
+    }
+
+    Nodo ObtenerNodoConMenorF(List<Nodo> nodos) {
+        return nodos.OrderBy(n => n.F).First();
+    }
+
+    List<Vector2Int> ObtenerVecinos(Vector2Int pos, int[,] mapa) {
+        List<Vector2Int> vecinos = new List<Vector2Int>();
+        Vector2Int[] direcciones = {
+            new Vector2Int(1, 0), new Vector2Int(-1, 0),
+            new Vector2Int(0, 1), new Vector2Int(0, -1)
+        };
+
+        foreach (Vector2Int dir in direcciones) {
+            Vector2Int vecino = pos + dir;
+            if (vecino.x >= 0 && vecino.x < mapa.GetLength(0) &&
+                vecino.y >= 0 && vecino.y < mapa.GetLength(1)) {
+                vecinos.Add(vecino);
+            }
+        }
+        return vecinos;
+    }
+
+    List<Vector2Int> ReconstruirCamino(Nodo nodo) {
+        List<Vector2Int> camino = new List<Vector2Int>();
+        while (nodo != null) {
+            camino.Add(nodo.posicion);
+            nodo = nodo.padre;
+        }
+        camino.Reverse();
+        return camino;
     }
 }
